@@ -30,5 +30,10 @@ curl --fail --silent --show-error \
     http://127.0.0.1/healthz \
     >/dev/null
 
+echo "Checking Prometheus..."
+curl --fail --silent --show-error \
+    http://127.0.0.1:9090/-/healthy \
+    >/dev/null
+
 echo
 echo "All infrastructure health checks passed."

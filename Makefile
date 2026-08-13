@@ -1,5 +1,5 @@
 COMPOSE := docker compose
-NETWORKS := vps-edge vps-data
+NETWORKS := vps-edge vps-data vps-monitoring
 
 .PHONY: help networks config up down restart pull deploy status logs health db-create
 
