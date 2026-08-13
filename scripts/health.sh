@@ -35,5 +35,10 @@ curl --fail --silent --show-error \
     http://127.0.0.1:9090/-/healthy \
     >/dev/null
 
+echo "Checking Grafana..."
+curl --fail --silent --show-error \
+    http://127.0.0.1:3000/api/health \
+    >/dev/null
+
 echo
 echo "All infrastructure health checks passed."
