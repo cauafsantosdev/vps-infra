@@ -23,7 +23,7 @@ jobs:
         run: cp .env.example .env
 
       - name: Validate shell scripts
-        run: shellcheck scripts/*.sh
+        run: shellcheck -x scripts/*.sh
 
       - name: Validate Docker Compose
         run: docker compose config >/dev/null
