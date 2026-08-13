@@ -1,0 +1,6 @@
+:80 {
+	respond /healthz "ok" 200
+	respond "vps-infra is running" 200
+}
+
+import /etc/caddy/sites/*.caddy
