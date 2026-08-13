@@ -1,0 +1,9 @@
+[Unit]
+Description=Back up shared PostgreSQL databases
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/vps-infra
+ExecStart=/opt/vps-infra/scripts/backup.sh
