@@ -36,6 +36,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
     jq \
     openssl \
     rclone \
+    sudo \
     ufw \
     unattended-upgrades \
     vim
@@ -105,7 +106,7 @@ if ! id "$DEPLOY_USER" >/dev/null 2>&1; then
         "$DEPLOY_USER"
 fi
 
-usermod -aG docker "$DEPLOY_USER"
+usermod -aG docker,sudo "$DEPLOY_USER"
 
 DEPLOY_HOME="$(getent passwd "$DEPLOY_USER" | cut -d: -f6)"
 
@@ -116,13 +117,24 @@ install \
     -g "$DEPLOY_USER" \
     "$DEPLOY_HOME/.ssh"
 
-if [[ -f /root/.ssh/authorized_keys ]]; then
+SOURCE_USER="${SUDO_USER:-root}"
+SOURCE_HOME="$(getent passwd "$SOURCE_USER" | cut -d: -f6)"
+KEY_SOURCE="${SOURCE_HOME}/.ssh/authorized_keys"
+
+if [[ ! -f "$KEY_SOURCE" && -f /root/.ssh/authorized_keys ]]; then
+    KEY_SOURCE="/root/.ssh/authorized_keys"
+fi
+
+if [[ -f "$KEY_SOURCE" ]]; then
     install \
         -m 0600 \
         -o "$DEPLOY_USER" \
         -g "$DEPLOY_USER" \
-        /root/.ssh/authorized_keys \
+        "$KEY_SOURCE" \
         "$DEPLOY_HOME/.ssh/authorized_keys"
+else
+    echo "WARNING: no authorized_keys file found."
+    echo "Configure SSH access for '$DEPLOY_USER' before disabling initial SSH access."
 fi
 
 echo "Creating application directory..."
