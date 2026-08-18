@@ -34,6 +34,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
     gnupg \
     htop \
     jq \
+    make \
     openssl \
     rclone \
     sudo \
