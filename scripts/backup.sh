@@ -43,8 +43,10 @@ if [[ "${R2_BACKUP_ENABLED:-false}" == "true" ]]; then
     export RCLONE_CONFIG_R2_PROVIDER=Cloudflare
     export RCLONE_CONFIG_R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID"
     export RCLONE_CONFIG_R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY"
+    export RCLONE_CONFIG_R2_REGION=auto
     export RCLONE_CONFIG_R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
     export RCLONE_CONFIG_R2_ACL=private
+    export RCLONE_CONFIG_R2_NO_CHECK_BUCKET=true
 
     echo "Uploading backup to Cloudflare R2..."
 
